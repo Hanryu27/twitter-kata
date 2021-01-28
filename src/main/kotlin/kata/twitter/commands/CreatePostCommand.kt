@@ -1,9 +1,12 @@
 package kata.twitter.commands
 
-class CreatePostCommand: Command {
+import kata.twitter.core.use.cases.CreatePostUseCase
 
-    override fun execute() { 
-        throw Error("not implemented")
+class CreatePostCommand(private val postCreator: CreatePostUseCase, private val command: String): Command {
+
+    override fun execute() {
+        val (username, message) = command.split("->")
+        this.postCreator.createPost(username.trim(), message.trim())
     }
 
 }

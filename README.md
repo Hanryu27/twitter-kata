@@ -1,4 +1,4 @@
-# Social Networking Kata 
+# Social Networking Kata - WORK IN PROGRESS 
 
 ### Description
 Implement a console-based social networking application (similar to Twitter) satisfying the scenarios below.

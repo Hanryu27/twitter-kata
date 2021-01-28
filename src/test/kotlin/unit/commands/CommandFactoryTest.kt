@@ -1,6 +1,7 @@
 package unit.commands
 
 import kata.twitter.commands.*
+import kata.twitter.core.facades.UseCases
 import kata.twitter.core.use.cases.CreatePostUseCase
 import kata.twitter.core.use.cases.FollowUserUserCase
 import kata.twitter.core.use.cases.ReadPostsUseCase
@@ -16,10 +17,7 @@ object CommandFactoryTest : Spek({
 
         beforeGroup {
             commandFactory = CommandFactory(
-                mock(CreatePostUseCase::class.java),
-                mock(ReadPostsUseCase::class.java),
-                mock(FollowUserUserCase::class.java),
-                mock(WallUseCase::class.java)
+                mock(UseCases::class.java)
             )
         }
 

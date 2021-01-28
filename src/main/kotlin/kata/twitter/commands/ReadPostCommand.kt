@@ -1,9 +1,11 @@
 package kata.twitter.commands
 
-class ReadPostCommnad: Command {
+import kata.twitter.core.use.cases.ReadPostsUseCase
+
+class ReadPostCommnad(private val postReader: ReadPostsUseCase, private val command: String): Command {
 
     override fun execute() { 
-        throw Error("not implemented")
+        this.postReader.readPost(command)
     }
 
 }

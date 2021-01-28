@@ -1,23 +1,17 @@
 package kata.twitter.commands
 
-import kata.twitter.core.use.cases.CreatePostUseCase
-import kata.twitter.core.use.cases.FollowUserUserCase
-import kata.twitter.core.use.cases.ReadPostsUseCase
-import kata.twitter.core.use.cases.WallUseCase
+import kata.twitter.core.facades.UseCases
 
 class CommandFactory(
-    private val postUseCase: CreatePostUseCase,
-    private val readPostsUseCase: ReadPostsUseCase,
-    private val followUserUserCase: FollowUserUserCase,
-    private val wallUseCase: WallUseCase
+    private val useCases: UseCases
 ) {
 
     fun from(command: String): Command {
         return when {
-            command.contains("->") -> CreatePostCommand()
-            command.contains("follow") -> FollowUserCommand()
-            command.contains("wall") -> WallCommand()
-            else -> ReadPostCommnad()
+            command.contains("->") -> CreatePostCommand(useCases, command)
+            command.contains("follow") -> FollowUserCommand(useCases, command)
+            command.contains("wall") -> WallCommand(useCases, command)
+            else -> ReadPostCommnad(useCases, command)
         }
     }
 }

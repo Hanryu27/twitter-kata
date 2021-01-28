@@ -1,38 +1,47 @@
 package acceptance
 
-import acceptance.utils.FakeTwitterKata
-import org.junit.jupiter.api.Assertions
+import acceptance.utils.FakeConsole
+import io.reactivex.rxjava3.kotlin.subscribeBy
+import kata.twitter.TwitterKata
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
+import com.winterbe.expekt.expect
 
 
 object PostsTest : Spek({
     describe("Given the Twitter Kata is running") {
-        lateinit var twitter: FakeTwitterKata
+        lateinit var console: FakeConsole
+        lateinit var twitter: TwitterKata
 
         beforeGroup {
-            twitter = FakeTwitterKata()
+            console = FakeConsole()
+            twitter = TwitterKata.of(console)
+            twitter.run(false)
         }
 
         describe("Given Alice posts a few messages") {
             val aliceUsername = "Alice"
-            lateinit var messages: Array<String>
+            lateinit var messages: List<String>
             beforeEachTest {
                 messages =
-                    arrayOf("Today is gonna be a good day", "Lewis Hamilton has won his 7th F1 World Championship")
+                    listOf("Today is gonna be a good day", "Lewis Hamilton has won his 7th F1 World Championship")
 
                 messages.forEach { message ->
                     println(message)
-                    twitter.fakeConsoleCommand("$aliceUsername -> $message")
+                    console.fakeReadLine("$aliceUsername -> $message")
                 }
             }
 
             describe("When Bob reads Alice's messages") {
 
-
-                val alicePosts = arrayOf("pepe")
-                println(alicePosts)
-                Assertions.assertEquals(messages, alicePosts)
+                it("Should obtain all messages by chronological order") {
+                    console.getOutputLines().take(2).toList().subscribeBy(
+                        onSuccess = {
+                            expect(it).to.equal(messages)
+                        }
+                    )
+                    console.fakeReadLine("Alice")
+                }
             }
         }
     }

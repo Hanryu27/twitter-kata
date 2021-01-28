@@ -1,9 +1,11 @@
 package kata.twitter.commands
 
-class FollowUserCommand: Command {
+import kata.twitter.core.use.cases.FollowUserUserCase
+
+class FollowUserCommand(private val userFollower: FollowUserUserCase, private val command: String): Command {
 
     override fun execute() { 
-        throw Error("not implemented")
+        this.userFollower.followUser()
     }
 
 }

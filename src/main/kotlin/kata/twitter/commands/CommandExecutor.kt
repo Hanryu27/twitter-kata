@@ -1,10 +1,9 @@
 package kata.twitter.commands
 
-class CommandExecutor: CommandDispatcher {
+class CommandExecutor(val commandFactory: CommandFactory): CommandDispatcher {
 
     override fun execute(command: String) {
-//        val command = this.commandFactory.from(command)
-//        command.execute()
-        throw Error("not implemented")
+        val command = this.commandFactory.from(command)
+        command.execute()
     }
 }

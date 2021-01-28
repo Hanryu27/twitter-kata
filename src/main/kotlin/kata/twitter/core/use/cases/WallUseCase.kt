@@ -1,4 +1,5 @@
 package kata.twitter.core.use.cases
 
-open class WallUseCase {
+interface WallUseCase {
+    fun wallUse()
 }
